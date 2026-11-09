@@ -1,0 +1,19 @@
+[project]
+name = "fastapi-expense-tracker"
+version = "0.1.0"
+description = "Personal expense tracker API with budgets, monthly summaries and overrun alerts."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+# FastAPI's Depends()/Query() in argument defaults is the intended pattern.
+extend-ignore = ["B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
