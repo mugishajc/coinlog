@@ -4,9 +4,10 @@ __pycache__/
 *.sqlite3
 .venv/
 venv/
-.env
 .pytest_cache/
 .ruff_cache/
 .coverage
 htmlcov/
 .DS_Store
+config.bat
+node_modules
