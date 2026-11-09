@@ -17,3 +17,7 @@ extend-ignore = ["B008"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+
+[tool.ruff.lint.isort]
+# The local alembic/ folder holds migrations; the import is the real package.
+known-third-party = ["alembic"]
