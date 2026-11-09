@@ -93,3 +93,30 @@ class ExpensePage(BaseModel):
     total: int
     limit: int
     offset: int
+
+
+# --- budgets ----------------------------------------------------------------
+
+Year = Annotated[int, Field(ge=2000, le=2100)]
+Month = Annotated[int, Field(ge=1, le=12)]
+
+
+class BudgetCreate(BaseModel):
+    year: Year
+    month: Month
+    limit: Money
+    category_id: int | None = Field(
+        default=None, description="Leave empty for an overall monthly budget"
+    )
+
+
+class BudgetUpdate(BaseModel):
+    limit: Money
+
+
+class BudgetOut(ORMModel):
+    id: int
+    year: int
+    month: int
+    limit: Decimal
+    category_id: int | None
