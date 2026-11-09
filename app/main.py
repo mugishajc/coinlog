@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from .config import get_settings
+from .routers import auth
 
 
 def create_app() -> FastAPI:
@@ -11,6 +12,7 @@ def create_app() -> FastAPI:
     def health() -> dict[str, str]:
         return {"status": "ok"}
 
+    app.include_router(auth.router)
     return app
 
 
