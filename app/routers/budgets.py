@@ -36,7 +36,7 @@ def create_budget(payload: BudgetCreate, db: DbSession, user: CurrentUser):
     if payload.category_id is not None:
         get_owned_category(db, user, payload.category_id)
 
-    # Checked here as well as in the schema: SQLite treats NULL category ids as
+    # Checked here as well as by the unique constraint: SQLite treats NULL category ids as
     # distinct, so the unique constraint alone would allow two overall budgets.
     duplicate = db.scalar(
         select(Budget.id).where(

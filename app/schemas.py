@@ -120,3 +120,50 @@ class BudgetOut(ORMModel):
     month: int
     limit: Decimal
     category_id: int | None
+
+
+# --- reports ----------------------------------------------------------------
+
+
+class BudgetCheckOut(ORMModel):
+    budget_id: int
+    category_id: int | None
+    category_name: str | None
+    limit: Decimal
+    spent: Decimal
+    remaining: Decimal
+    percent_used: float
+    status: str
+
+
+class CategorySpend(ORMModel):
+    category_id: int | None
+    name: str
+    spent: Decimal
+    count: int
+    budget: BudgetCheckOut | None
+
+
+class DailyTotal(ORMModel):
+    day: date
+    total: Decimal
+
+
+class MonthlySummaryOut(ORMModel):
+    year: int
+    month: int
+    currency: str
+    total: Decimal
+    count: int
+    previous_total: Decimal
+    change_percent: float | None
+    categories: list[CategorySpend]
+    daily: list[DailyTotal]
+    overall_budget: BudgetCheckOut | None
+    alerts: list[BudgetCheckOut]
+
+
+class TrendPoint(BaseModel):
+    year: int
+    month: int
+    total: Decimal
