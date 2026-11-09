@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from .config import get_settings
-from .routers import auth
+from .routers import auth, categories, expenses
 
 
 def create_app() -> FastAPI:
@@ -13,6 +13,8 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(auth.router)
+    app.include_router(categories.router)
+    app.include_router(expenses.router)
     return app
 
 

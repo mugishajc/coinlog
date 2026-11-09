@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from decimal import Decimal
 from typing import Annotated
 
@@ -39,3 +39,57 @@ class UserOut(ORMModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+# --- categories -------------------------------------------------------------
+
+HexColor = Annotated[str, Field(pattern=r"^#[0-9a-fA-F]{6}$")]
+
+
+class CategoryCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=60)
+    color: HexColor | None = None
+
+
+class CategoryUpdate(BaseModel):
+    name: str | None = Field(default=None, min_length=1, max_length=60)
+    color: HexColor | None = None
+
+
+class CategoryOut(ORMModel):
+    id: int
+    name: str
+    color: str | None
+
+
+# --- expenses ---------------------------------------------------------------
+
+
+class ExpenseCreate(BaseModel):
+    amount: Money
+    spent_on: date
+    description: str = Field(default="", max_length=255)
+    category_id: int | None = None
+
+
+class ExpenseUpdate(BaseModel):
+    amount: Money | None = None
+    spent_on: date | None = None
+    description: str | None = Field(default=None, max_length=255)
+    category_id: int | None = None
+
+
+class ExpenseOut(ORMModel):
+    id: int
+    amount: Decimal
+    spent_on: date
+    description: str
+    category_id: int | None
+    created_at: datetime
+
+
+class ExpensePage(BaseModel):
+    items: list[ExpenseOut]
+    total: int
+    limit: int
+    offset: int
